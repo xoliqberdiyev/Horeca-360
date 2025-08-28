@@ -22,10 +22,17 @@ schema_view = get_schema_view(
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+   path('admin/', admin.site.urls),
+   path('api/v1/', include(
+      [
+         path('accounts/', include('core.apps.accounts.urls')),
+         path('orders/', include('core.apps.orders.urls')),
+         path('products/', include('core.apps.products.urls')),
+         path('shared/', include('core.apps.shared.urls')),
+      ]
+   )),
 
-
-    path('', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+   path('', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
