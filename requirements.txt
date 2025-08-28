@@ -9,3 +9,5 @@ drf_yasg
 redis
 django-redis
 psycopg2-binary
+pillow
+django-modeltranslation

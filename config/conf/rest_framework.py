@@ -4,6 +4,6 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
-    # 'DEFAULT_PAGINATION_CLASS': 'core.apps.shared.paginations.custom.CustomPageNumberPagination',
-    # 'PAGE_SIZE': 10
+    'DEFAULT_PAGINATION_CLASS': 'core.apps.shared.paginations.custom.CustomPageNumberPagination',
+    'PAGE_SIZE': 10
 }

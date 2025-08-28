@@ -12,6 +12,7 @@ ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
 
 
 INSTALLED_APPS = [
+    'modeltranslation',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -110,4 +111,14 @@ MEDIA_ROOT = BASE_DIR / 'resources/media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+AUTH_USER_MODEL = 'accounts.User'
+
+
 from config.conf import *
+
+LANGUAGES = (
+    ('uz', 'Uzbek'),
+    ('ru', 'Russian'),
+)
+MODELTRANSLATION_LANGUAGES = ('uz', 'ru')
+MODELTRANSLATION_DEFAULT_LANGUAGE = 'uz'
