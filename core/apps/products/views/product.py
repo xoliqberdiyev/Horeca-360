@@ -4,11 +4,11 @@ from rest_framework import generics
 from rest_framework.response import Response
 
 from core.apps.products.models import Product, Category
-from core.apps.products.serializers import category as serializers
+from core.apps.products.serializers import product as serializers
 
 
 class ProductListApiView(generics.GenericAPIView):
-    serializer_class = serializers.CategoryListSerializer
+    serializer_class = serializers.ProductListSerializer
     queryset = Product.objects.all()
     permission_classes = []
 
@@ -17,7 +17,7 @@ class ProductListApiView(generics.GenericAPIView):
         products = Product.objects.filter(category=category)
         page = self.paginate_queryset(products)
         if page is not None:
-            serializer = self.serializer_class(page, many=True)
+            serializer = self.serializer_class(page, many=True, context={'user': request.user})
             return self.get_paginated_response(serializer.data)
-        serializer = self.serializer_class(products, many=True)
+        serializer = self.serializer_class(products, many=True, context={'user': request.user})
         return Response(serializer.data, status=200)
