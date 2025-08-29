@@ -4,4 +4,5 @@ from core.apps.orders.views import order as order_views
 
 urlpatterns = [
     path('order/create/', order_views.OrderCreateApiView.as_view()),
+    path('order/list/', order_views.OrderListApiView.as_view()),
 ]

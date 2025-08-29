@@ -4,6 +4,7 @@ from rest_framework import serializers
 
 from core.apps.orders.models import Order, OrderItem
 from core.apps.products.models import Product
+from core.apps.products.serializers.product import ProductListSerializer
 
 
 class OrderItemCreateSerializer(serializers.Serializer):
@@ -42,4 +43,23 @@ class OrderCreateSerializer(serializers.Serializer):
             order.total_price = total_price
             order.save()
             return order
+        
+
+class OrderItemListSerializer(serializers.ModelSerializer):
+    product = ProductListSerializer()
+
+    class Meta:
+        model = OrderItem
+        fields = [
+            'id', 'product', 'price', 'quantity'
+        ]
                 
+    
+class OrderListSerializer(serializers.ModelSerializer):
+    items = OrderItemListSerializer(many=True)
+
+    class Meta:
+        model = Order
+        fields = [
+            'id', 'total_price', 'items'
+        ]

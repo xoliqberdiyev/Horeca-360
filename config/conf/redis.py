@@ -1,3 +1,5 @@
+from config.env import env
+
 CACHES = {
     "default": {
         "BACKEND": 'django_redis.cache.RedisCache',
@@ -19,6 +21,19 @@ CACHEOPS = {
         "ops": "all", 
         "timeout": 60 * 5,
     },
+    'orders.*': {
+        'ops': 'all',
+        'timeout': 60 * 5,
+    },
+    'products.*': {
+        'ops': 'all',
+        'timeout': 60 * 5,
+    },
+    'shared.*': {
+        'ops': 'all',
+        'timeout': 60 * 5,
+    }
 }
+
 CACHEOPS_DEGRADE_ON_FAILURE = True
-CACHEOPS_ENABLED = False
+CACHEOPS_ENABLED = env.bool('CACHEOPS_ENABLED', False)
