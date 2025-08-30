@@ -21,3 +21,18 @@ class ProductListApiView(generics.GenericAPIView):
             return self.get_paginated_response(serializer.data)
         serializer = self.serializer_class(products, many=True, context={'user': request.user})
         return Response(serializer.data, status=200)
+
+
+class ProductsApiView(generics.GenericAPIView):
+    serializer_class = serializers.ProductListSerializer
+    queryset = Product.objects.all()
+    permission_classes = []
+
+    def get(self, request):
+        products = Product.objects.all()
+        page = self.paginate_queryset(products)
+        if page is not None:
+            serializer = self.serializer_class(page, many=True)
+            return self.get_paginated_response(serializer.data)
+        serializer = self.serializer_class(products, many=True)
+        return Response(serializer.data, status=200)
