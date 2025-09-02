@@ -30,7 +30,7 @@ INSTALLED_APPS = [
     'core.apps.accounts',
     'core.apps.orders',
     'core.apps.products',
-
+    'core.apps.admin_panel',
 ]
 
 MIDDLEWARE = [
