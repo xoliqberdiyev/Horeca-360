@@ -21,4 +21,4 @@ class ProductListSerializer(serializers.ModelSerializer):
         return {
             'id': obj.unity.id,
             'name': obj.unity.name,
-        }
+        } if obj.unity else None
