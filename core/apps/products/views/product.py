@@ -9,12 +9,12 @@ from core.apps.products.serializers import product as serializers
 
 class ProductListApiView(generics.GenericAPIView):
     serializer_class = serializers.ProductListSerializer
-    queryset = Product.objects.all()
+    queryset = Product.objects.select_related('unity')
     permission_classes = []
 
     def get(self, request, category_id):
         category = get_object_or_404(Category, id=category_id)
-        products = Product.objects.filter(category=category)
+        products = Product.objects.filter(category=category).select_related('unity')
         page = self.paginate_queryset(products)
         if page is not None:
             serializer = self.serializer_class(page, many=True, context={'user': request.user})
@@ -25,14 +25,25 @@ class ProductListApiView(generics.GenericAPIView):
 
 class ProductsApiView(generics.GenericAPIView):
     serializer_class = serializers.ProductListSerializer
-    queryset = Product.objects.all()
+    queryset = Product.objects.select_related('unity')
     permission_classes = []
 
     def get(self, request):
-        products = Product.objects.all()
+        products = self.queryset
         page = self.paginate_queryset(products)
         if page is not None:
             serializer = self.serializer_class(page, many=True)
             return self.get_paginated_response(serializer.data)
         serializer = self.serializer_class(products, many=True)
+        return Response(serializer.data, status=200)
+    
+
+class ProductDetailApiView(generics.GenericAPIView):
+    serializer_class = serializers.ProductListSerializer
+    queryset = Product.objects.select_related('unity')
+    permission_classes = []
+
+    def get(self, request, id):
+        product = get_object_or_404(Product, id=id)
+        serializer = self.serializer_class(product)
         return Response(serializer.data, status=200)

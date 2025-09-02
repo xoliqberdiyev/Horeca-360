@@ -14,6 +14,7 @@ urlpatterns = [
         [
             path('<uuid:category_id>/list/', product_views.ProductListApiView.as_view()),
             path('list/', product_views.ProductsApiView.as_view()),
+            path('<uuid:id>/', product_views.ProductDetailApiView.as_view()),
         ]
     )),
     path('search/', search_views.SearchApiView.as_view()),
