@@ -6,8 +6,17 @@ from core.apps.products.models import Product
 
 
 class Order(BaseModel):
+    # STATUS = (
+    #     ('', ''),
+    #     ('', ''),
+    #     ('', ''),
+    #     ('', ''),
+    #     ('', '')
+    # )
     total_price = models.PositiveBigIntegerField(default=0)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='orders') 
+    order_number = models.PositiveBigIntegerField(default=1)
+    # status = models.CharField(max_length=20, choices=STATUS)
 
     def __str__(self):
         return f'{self.user} order'

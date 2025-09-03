@@ -38,3 +38,15 @@ class UserSerializer(serializers.ModelSerializer):
                 instance.set_password(validated_data.get('password'))
             instance.save()
             return instance
+        
+
+class UserLoginSerializer(serializers.Serializer):
+    username = serializers.CharField()
+    password = serializers.CharField()
+
+    def validate(self, data):
+        user = User.objects.filter(username=data['username'], is_superuser=True).first()
+        if not user:
+            raise serializers.ValidationError("User not found")
+        data['user'] = user
+        return data

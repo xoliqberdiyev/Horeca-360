@@ -1,8 +1,9 @@
 from django.shortcuts import get_object_or_404
 
 from rest_framework import generics, permissions, status, views
+from rest_framework_simplejwt.tokens import RefreshToken
 
-from core.apps.admin_panel.serializers.user import UserSerializer
+from core.apps.admin_panel.serializers.user import UserSerializer, UserLoginSerializer
 from core.apps.accounts.models import User
 from core.apps.shared.mixins.response import ResponseMixin
 
@@ -83,3 +84,22 @@ class UserDashboardApiView(views.APIView, ResponseMixin):
             data={'admin_users': admin_users, 'users': users},
             message='userlar soni',
         )
+    
+
+class UserLoginApiView(generics.GenericAPIView, ResponseMixin):
+    serializer_class = UserLoginSerializer
+    queryset = User.objects.all()
+
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            user = serializer.validated_data.get('user')
+            token = RefreshToken.for_user(user)
+            return self.success_response(
+                data={
+                    'access': str(token.access_token),
+                    'refresh': str(token)
+                },
+                message='user tizimga kirish muvaffaqiyatli yakunlandi'
+            )
+        return self.failure_response(message='user tizimga kirishda xatolik', data=serializer.errors)

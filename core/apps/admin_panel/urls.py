@@ -7,7 +7,6 @@ from core.apps.admin_panel.views import category as category_views
 from core.apps.admin_panel.views import product as product_views
 
 
-
 urlpatterns = [
     path('user/', include(
         [
@@ -17,6 +16,7 @@ urlpatterns = [
             path('<uuid:id>/delete/', user_views.UserDeleteApiView.as_view()),
             path('<uuid:id>/', user_views.UserDetailApiView.as_view()),
             path('dashboard/', user_views.UserDashboardApiView.as_view()),
+            path('login/', user_views.UserLoginApiView.as_view()),
         ]
     )), 
     path('banner/', include(
