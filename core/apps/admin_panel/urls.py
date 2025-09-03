@@ -5,6 +5,7 @@ from core.apps.admin_panel.views import banner as banner_views
 from core.apps.admin_panel.views import unity as unity_views
 from core.apps.admin_panel.views import category as category_views
 from core.apps.admin_panel.views import product as product_views
+from core.apps.admin_panel.views import order as order_views
 
 
 urlpatterns = [
@@ -54,4 +55,9 @@ urlpatterns = [
             path('<uuid:id>/', product_views.ProductDetailApiView.as_view()),
         ]
     )),
+    path('order/', include(
+        [
+            path('list/', order_views.OrderListApiView.as_view()),
+        ]
+    ))
 ]
