@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404
 
-from rest_framework import generics, views, permissions, status
+from rest_framework import generics, views, permissions, status, parsers
 
 from core.apps.shared.mixins.response import ResponseMixin
 from core.apps.products.models import Category
@@ -23,6 +23,7 @@ class CategoryCreateApiView(generics.GenericAPIView, ResponseMixin):
     serializer_class = CategorySerializer
     queryset = Category.objects.all()
     permission_classes = [permissions.IsAdminUser]
+    parser_classes = [parsers.FormParser, parsers.MultiPartParser]
 
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
@@ -51,6 +52,7 @@ class CategoryUpdateApiView(generics.GenericAPIView, ResponseMixin):
     serializer_class = CategorySerializer
     queryset = Category.objects.all()
     permission_classes = [permissions.IsAdminUser]
+    parser_classes = [parsers.FormParser, parsers.MultiPartParser]
 
     def patch(self, request, id):
         category = get_object_or_404(Category, id=id)

@@ -12,5 +12,5 @@ class ProductAdmin(TranslationAdmin):
 
 
 @admin.register(Unity)
-class UnityAdmin(admin.ModelAdmin):
+class UnityAdmin(TranslationAdmin):
     list_display = ['id', 'name']

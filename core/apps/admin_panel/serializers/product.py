@@ -7,7 +7,7 @@ class ProductListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = [
-            'id', 'name', 'image', 'category', 'price', 'description', 'unity'
+            'id', 'name_uz', 'name_ru', 'image', 'category', 'price', 'description_uz', 'description_ru', 'unity'
         ]
     
     def get_category(self, obj):
@@ -17,9 +17,10 @@ class ProductListSerializer(serializers.ModelSerializer):
         }
 
     
-class ProductCreateSerializer(serializers.ModelSerializer):
+class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = [
-            'name', 'image', 'category', 'price', 'description', 'unity'
+            'name_uz', 'name_ru', 'image', 'category', 'price', 'description_uz', 'description_ru', 'unity'
         ]
+

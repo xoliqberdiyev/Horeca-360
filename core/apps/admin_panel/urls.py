@@ -4,6 +4,7 @@ from core.apps.admin_panel.views import user as user_views
 from core.apps.admin_panel.views import banner as banner_views
 from core.apps.admin_panel.views import unity as unity_views
 from core.apps.admin_panel.views import category as category_views
+from core.apps.admin_panel.views import product as product_views
 
 
 
@@ -42,6 +43,14 @@ urlpatterns = [
             path('list/', category_views.CategoryListApiView.as_view()),
             path('<uuid:id>/update/', category_views.CategoryUpdateApiView.as_view()),
             path('<uuid:id>/delete/', category_views.CategoryDeleteApiView.as_view()),
+        ]
+    )),
+    path('product/', include(
+        [
+            path('create/', product_views.ProductCreateApiView.as_view()),
+            path('list/', product_views.ProductListApiView.as_view()),
+            # path('<uuid:id>/update/', product_views..as_view()),
+            path('<uuid:id>/delete/', product_views.ProductDeleteApiView.as_view()),
         ]
     )),
 ]

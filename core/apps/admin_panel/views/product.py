@@ -1,4 +1,6 @@
-from rest_framework import generics, views
+from django.shortcuts import get_object_or_404 
+
+from rest_framework import generics, views, status, parsers
 from rest_framework.permissions import IsAdminUser
 
 from core.apps.admin_panel.serializers import product as serializers
@@ -18,6 +20,48 @@ class ProductListApiView(generics.GenericAPIView):
             return self.get_paginated_response(serializer.data)
     
 
-# class ProductCreateApiView(generics.GenericAPIView, ResponseMixin):
+class ProductCreateApiView(generics.GenericAPIView, ResponseMixin):
+    serializer_class = serializers.ProductSerializer
+    queryset = Product.objects.all()
+    permission_classes = [IsAdminUser]
+    parser_classes = [parsers.FormParser, parsers.MultiPartParser]
+
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            return self.success_response(
+                message='mahsulot qoshildi', status_code=status.HTTP_201_CREATED
+            )
+        return self.failure_response(message='mahsulot qoshishda hatolik', data=serializer.errors)
+    
+
+class ProductDeleteApiView(generics.GenericAPIView, ResponseMixin):
+    serializer_class = None
+    queryset = Product.objects.all()
+    permission_classes = [IsAdminUser]
+
+    def delete(self, request, id):
+        product = get_object_or_404(Product, id=id)
+        product.delete()
+        return self.success_response(
+            message='product deleted', status_code=status.HTTP_204_NO_CONTENT
+        )
 
 
+class ProductUpdateApiView(generics.GenericAPIView, ResponseMixin):
+    serializer_class = serializers.ProductSerializer
+    queryset = Product.objects.all()
+    permission_classes = [IsAdminUser]
+    parser_classes = [parsers.FormParser, parsers.MultiPartParser]
+
+    def patch(self, request, id):
+        product = get_object_or_404(Product, id=id)
+        serializer = self.serializer_class(data=request.data, instance=product)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            return self.success_response(
+                message='mahsulot tahrirlandi',
+            )
+        return self.failure_response(message='mahsulot tahrirlashda hatolik', data=serializer.errors)
+    
