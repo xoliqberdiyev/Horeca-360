@@ -1,7 +1,6 @@
 from django.shortcuts import get_object_or_404
 
-from rest_framework import generics, permissions, status
-from rest_framework.response import Response
+from rest_framework import generics, permissions, status, views
 
 from core.apps.admin_panel.serializers.user import UserSerializer
 from core.apps.accounts.models import User
@@ -72,3 +71,15 @@ class UserDetailApiView(generics.GenericAPIView, ResponseMixin):
         user = get_object_or_404(User, id=id)
         serializer = self.serializer_class(user)
         return self.success_response(data=serializer.data, message='user malumotlari')
+
+
+class UserDashboardApiView(views.APIView, ResponseMixin):
+    permission_classes = [permissions.IsAdminUser]
+
+    def get(self, request):
+        admin_users = User.objects.filter(is_superuser=True).count()
+        users = User.objects.filter(is_superuser=False).count()
+        return self.success_response(
+            data={'admin_users': admin_users, 'users': users},
+            message='userlar soni',
+        )
