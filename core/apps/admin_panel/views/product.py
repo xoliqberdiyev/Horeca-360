@@ -65,3 +65,13 @@ class ProductUpdateApiView(generics.GenericAPIView, ResponseMixin):
             )
         return self.failure_response(message='mahsulot tahrirlashda hatolik', data=serializer.errors)
     
+class ProductDetailApiView(generics.GenericAPIView, ResponseMixin):
+    serializer_class = serializers.ProductSerializer
+    queryset = Product.objects.all()
+    permission_classes = [IsAdminUser]
+
+    def get(self, request, id):
+        product = get_object_or_404(Product, id=id)
+        serializer = self.serializer_class(product)
+        return self.success_response(message='product malumotlari', data=serializer.data)
+    

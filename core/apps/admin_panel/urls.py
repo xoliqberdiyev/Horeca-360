@@ -49,8 +49,9 @@ urlpatterns = [
         [
             path('create/', product_views.ProductCreateApiView.as_view()),
             path('list/', product_views.ProductListApiView.as_view()),
-            # path('<uuid:id>/update/', product_views..as_view()),
+            path('<uuid:id>/update/', product_views.ProductUpdateApiView.as_view()),
             path('<uuid:id>/delete/', product_views.ProductDeleteApiView.as_view()),
+            path('<uuid:id>/', product_views.ProductDetailApiView.as_view()),
         ]
     )),
 ]
