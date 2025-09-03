@@ -6,7 +6,7 @@ from core.apps.admin_panel.views import unity as unity_views
 from core.apps.admin_panel.views import category as category_views
 from core.apps.admin_panel.views import product as product_views
 from core.apps.admin_panel.views import order as order_views
-
+from core.apps.admin_panel.views import dashboard as dashboard_views
 
 urlpatterns = [
     path('user/', include(
@@ -58,6 +58,12 @@ urlpatterns = [
     path('order/', include(
         [
             path('list/', order_views.OrderListApiView.as_view()),
+        ]
+    )),
+    path('dashboard/', include(
+        [
+            path('statistics/', dashboard_views.DashboardApiView.as_view()),
+            path('recent_activity/', dashboard_views.RecentActivityApiView.as_view()),
         ]
     ))
 ]
