@@ -25,7 +25,7 @@ class LikeProductListApiView(generics.GenericAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request):
-        products = Product.objects.filter(likes__user=request.user)
+        products = Product.objects.filter(likes__user=request.user).distinct()
         page = self.paginate_queryset(products)
         if page is not None:
             serializer = self.serializer_class(page, many=True, context={'user': request.user})
