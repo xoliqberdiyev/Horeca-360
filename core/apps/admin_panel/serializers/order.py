@@ -27,7 +27,8 @@ class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
         fields = [
-            'id', 'order_number', 'status', 'total_price', 'user', 'items'
+            'id', 'order_number', 'total_price', 'user', 'payment_type', 'delivery_type',
+            'delivery_price', 'contact_number', 'address', 'comment', 'name', 'items'
         ]
 
     def get_user(self, obj):

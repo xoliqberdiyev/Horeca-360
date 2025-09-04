@@ -22,15 +22,30 @@ class OrderItemCreateSerializer(serializers.Serializer):
 
 class OrderCreateSerializer(serializers.Serializer):
     items = OrderItemCreateSerializer(many=True)
+    payment_type = serializers.ChoiceField(choices=Order.PAYMENT_TYPE)
+    delivery_type = serializers.ChoiceField(choices=Order.DELIVERY_TYPE)
+    delivery_price = serializers.IntegerField(required=False)
+    contact_number = serializers.IntegerField()
+    address = serializers.CharField()
+    comment = serializers.CharField(required=False)
+    name = serializers.CharField(required=False)
     
     def create(self, validated_data):
         with transaction.atomic():
             order_items = validated_data.pop('items')
             order = Order.objects.create(
                 user=self.context.get('user'),
+                payment_type=validated_data.get('payment_type'),
+                delivery_type=validated_data.get('delivery_type'),
+                delivery_price=validated_data.get('delivery_price'),
+                contact_number=validated_data.get('contact_number'),
+                address=validated_data.get('address'),
+                comment=validated_data.get('comment'),
+                name=validated_data.get('name')
             )
             items = []
             total_price = 0
+            total_price += validated_data.get('delivery_price')
             for item in order_items:
                 items.append(OrderItem(
                     product=item.get('product'),
@@ -61,5 +76,6 @@ class OrderListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
         fields = [
-            'id', 'order_number', 'total_price', 'items', 'created_at'
+            'id', 'order_number', 'total_price', 'payment_type', 'delivery_type', 'delivery_price',
+            'contact_number', 'address', 'comment', 'name', 'items', 'created_at'
         ]
