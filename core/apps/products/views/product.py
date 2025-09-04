@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404
 
-from rest_framework import generics
+from rest_framework import generics, views
 from rest_framework.response import Response
 
 from core.apps.products.models import Product, Category
@@ -47,3 +47,11 @@ class ProductDetailApiView(generics.GenericAPIView):
         product = get_object_or_404(Product, id=id)
         serializer = self.serializer_class(product)
         return Response(serializer.data, status=200)
+    
+
+class UpdateProductTgIdApiView(views.APIView):
+    def post(self, request, product_code):
+        product = get_object_or_404(Product, code=product_code)
+        product.tg_id = request.data.get('tg_id')
+        product.save()
+        return Response({'success': True, 'message': 'telegram id saqlandi'}, status=200)

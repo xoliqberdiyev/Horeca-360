@@ -18,4 +18,5 @@ urlpatterns = [
         ]
     )),
     path('search/', search_views.SearchApiView.as_view()),
+    path('set_tg_id/<str:code>/', product_views.UpdateProductTgIdApiView.as_view()),
 ]
