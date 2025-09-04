@@ -1,7 +1,8 @@
-from rest_framework import views
+from rest_framework import views, permissions
 from rest_framework.response import Response
 
 from core.apps.orders.models import Supplier
+from core.apps.orders.serializers.supplier import SupplierListSerializer
 
 
 class SupplierCreateApiView(views.APIView):
@@ -26,3 +27,11 @@ class SupplierGetApiView(views.APIView):
         else:
             return Response({"success": False},status=404)
         
+    
+class SupplierListApiView(views.APIView):
+    permission_classes = [permissions.IsAdminUser]
+
+    def get(self, request):
+        supp = Supplier.objects.all()
+        serializer = SupplierListSerializer(supp, many=True)
+        return Response(serializer.data, status=200)
