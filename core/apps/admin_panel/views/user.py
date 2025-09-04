@@ -45,7 +45,7 @@ class UserUpdateApiView(generics.GenericAPIView, ResponseMixin):
 
     def patch(self, request, id):
         user = get_object_or_404(User, id=id)
-        serializer = self.serializer_class(instance=user, data=serializer.data)
+        serializer = self.serializer_class(instance=user, data=request.data, partial=True)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             return self.success_response(message='user tahrirlandi')
