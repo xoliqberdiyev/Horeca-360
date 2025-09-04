@@ -20,7 +20,6 @@ class SupplierCreateApiView(views.APIView):
 
 
 class SupplierListApiView(generics.ListAPIView):
-    permission_classes = [permissions.IsAdminUser]
     queryset = Supplier.objects.all()
     serializer_class = SupplierListSerializer
     pagination_class = None
