@@ -26,7 +26,7 @@ class OrderCreateSerializer(serializers.Serializer):
     payment_type = serializers.ChoiceField(choices=Order.PAYMENT_TYPE)
     delivery_type = serializers.ChoiceField(choices=Order.DELIVERY_TYPE)
     delivery_price = serializers.IntegerField(required=False)
-    contact_number = serializers.IntegerField()
+    contact_number = serializers.CharField()
     address = serializers.CharField()
     comment = serializers.CharField(required=False)
     name = serializers.CharField(required=False)
@@ -59,9 +59,15 @@ class OrderCreateSerializer(serializers.Serializer):
                     chat_id=item.get('product').tg_id,
                     product_name=item.get('product').name,
                     quantity=item.get('quantity'),
-                    price=item.get('price')
+                    price=item.get('price'),
+                    payment_type=validated_data.get('payment_type'),
+                    delivery_type=validated_data.get('delivery_type'),
+                    contact_number=validated_data.get('contact_number'),
+                    address=validated_data.get('address'),
+                    comment=validated_data.get('comment'),
+                    name=validated_data.get('name')
                 )
-                
+
             OrderItem.objects.bulk_create(items)
             order.total_price = total_price
             order.save()
