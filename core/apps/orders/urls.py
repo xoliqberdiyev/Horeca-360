@@ -8,5 +8,5 @@ urlpatterns = [
     path('order/list/', order_views.OrderListApiView.as_view()),
     path('supplier/create/', supp_views.SupplierCreateApiView.as_view()),
     path('supplier/<str:tg_id>/', supp_views.SupplierGetApiView.as_view()),
-    path('supplier/list/', supp_views.SupplierListApiView.as_view()),
+    path('supplier/', supp_views.SupplierListApiView.as_view()),
 ]
