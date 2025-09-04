@@ -11,3 +11,5 @@ django-redis
 psycopg2-binary
 pillow
 django-modeltranslation
+celery 
+requests

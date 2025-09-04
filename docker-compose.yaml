@@ -50,3 +50,19 @@ services:
     networks:
       - horeca
     image: redis
+
+  celery:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile.web
+    command: celery -A config worker --loglevel=info
+    volumes:
+      - "./:/code"
+    depends_on:
+      - redis
+      - web
+    networks:
+      - horeca
+    environment:
+      - CELERY_BROKER_URL=redis://redis:6379
+      - CELERY_RESULT_BACKEND=redis://redis:6379
