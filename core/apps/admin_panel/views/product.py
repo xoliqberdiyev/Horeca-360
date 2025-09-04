@@ -58,13 +58,13 @@ class ProductUpdateApiView(generics.GenericAPIView, ResponseMixin):
     def patch(self, request, id):
         product = get_object_or_404(Product, id=id)
         serializer = self.serializer_class(data=request.data, instance=product, partial=True)
-        if serializer.is_valid(raise_exception=True):
-            serializer.save()
-            return self.success_response(
-                message='mahsulot tahrirlandi',
-            )
-        return self.failure_response(message='mahsulot tahrirlashda hatolik', data=serializer.errors)
-    
+        serializer.is_valid()
+        serializer.save()
+        return self.success_response(
+            message='mahsulot tahrirlandi',
+        )
+
+
 class ProductDetailApiView(generics.GenericAPIView, ResponseMixin):
     serializer_class = serializers.ProductSerializer
     queryset = Product.objects.all()
