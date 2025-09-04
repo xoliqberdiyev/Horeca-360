@@ -7,7 +7,7 @@ class AdminProductListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = [
-            'id', 'name_uz', 'name_ru', 'image', 'category', 'price', 'description_uz', 'description_ru', 'unity'
+            'id', 'name_uz', 'name_ru', 'image', 'category', 'price', 'description_uz', 'description_ru', 'unity', 'tg_id', 'code', 'article',
         ]
     
     def get_category(self, obj):
@@ -21,11 +21,14 @@ class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = [
-            'name_uz', 'name_ru', 'image', 'category', 'price', 'description_uz', 'description_ru', 'unity'
+            'name_uz', 'name_ru', 'image', 'category', 'price', 'description_uz', 'description_ru', 'unity', 'tg_id', 'code', 'article',
         ]
         extra_kwargs = {
             'image': {'required':False},
             'category': {'required':False},
             'price': {'required':False},
+            'tg_id': {'required': False},
+            'code': {'required': False},
+            'article': {'required': False}
         }
 
