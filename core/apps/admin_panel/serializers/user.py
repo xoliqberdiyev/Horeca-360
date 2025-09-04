@@ -24,6 +24,7 @@ class UserSerializer(serializers.ModelSerializer):
                 first_name=validated_data.get('first_name'),
                 last_name=validated_data.get('last_name'),
                 username=validated_data.get('username'),
+                is_superuser=validated_data.get('is_superuser')
             )
             user.set_password(validated_data.get('password'))
             user.save()

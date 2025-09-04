@@ -25,7 +25,7 @@ class UserCreateApiView(generics.GenericAPIView, ResponseMixin):
 
 class UserListApiView(generics.GenericAPIView, ResponseMixin):
     serializer_class = UserSerializer
-    queryset = User.objects.exclude(is_superuser=True)
+    queryset = User.objects.all()
     permission_classes = [permissions.IsAdminUser]
 
     def get(self, request):
