@@ -23,4 +23,9 @@ class ProductSerializer(serializers.ModelSerializer):
         fields = [
             'name_uz', 'name_ru', 'image', 'category', 'price', 'description_uz', 'description_ru', 'unity'
         ]
+        extra_kwargs = {
+            'image': {'required':False},
+            'category': {'required':False},
+            'price': {'required':False},
+        }
 

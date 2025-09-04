@@ -57,7 +57,7 @@ class ProductUpdateApiView(generics.GenericAPIView, ResponseMixin):
 
     def patch(self, request, id):
         product = get_object_or_404(Product, id=id)
-        serializer = self.serializer_class(data=request.data, instance=product)
+        serializer = self.serializer_class(data=request.data, instance=product, partial=True)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             return self.success_response(
