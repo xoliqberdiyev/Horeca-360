@@ -8,7 +8,6 @@ from core.apps.products.models import Product
 class Order(BaseModel):
     PAYMENT_TYPE = (
         ('CASH', 'naqd'),
-        ('CARD', 'card'),
         ('ACCOUNT_NUMBER', 'hisob raqam'),
     )
     DELIVERY_TYPE = (
