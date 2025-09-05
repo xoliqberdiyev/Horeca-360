@@ -48,12 +48,17 @@ class OrderCreateSerializer(serializers.Serializer):
             total_price = 0
             total_price += validated_data.get('delivery_price')
             for item in order_items:
+                product = item.get("product")
                 items.append(OrderItem(
-                    product=item.get('product'),
+                    product=product,
                     price=item.get('price'),
                     quantity=item.get('quantity'),
                     order=order,
                 ))
+                if product.quantity_left > 0:
+                    product.quantity_left -= item.get('quantity')
+                    product.save()
+                
                 total_price += item.get('price')
                 send_orders_to_tg_bot.delay(
                     chat_id=item.get('product').tg_id,
