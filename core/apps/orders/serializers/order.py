@@ -10,7 +10,7 @@ from core.apps.orders.tasks.order_item import send_orders_to_tg_bot
 
 class OrderItemCreateSerializer(serializers.Serializer):
     product_id = serializers.UUIDField()
-    quantity = serializers.IntegerField()
+    quantity = serializers.FloatField()
 
     def validate(self, data):
         product = Product.objects.filter(id=data['product_id']).first()

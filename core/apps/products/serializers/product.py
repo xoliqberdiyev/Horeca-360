@@ -11,7 +11,7 @@ class ProductListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = [
-            'id', 'name', 'image', 'price', 'description', 'liked', 'unity',
+            'id', 'name', 'image', 'price', 'description', 'liked', 'unity', 'min_quantity'
         ]
 
     def get_liked(self, obj):

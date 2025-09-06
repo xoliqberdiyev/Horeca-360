@@ -26,6 +26,7 @@ class Product(BaseModel):
     article = models.CharField(max_length=200, null=True, blank=True, unique=True)
     code = models.CharField(max_length=200, null=True, blank=True)
     quantity_left = models.PositiveBigIntegerField(default=0)
+    min_quantity = models.FloatField(null=True)
 
     def __str__(self):
         return self.name

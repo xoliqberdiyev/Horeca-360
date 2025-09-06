@@ -37,7 +37,7 @@ class Order(BaseModel):
 
 class OrderItem(BaseModel):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='items')
-    quantity = models.PositiveIntegerField()
+    quantity = models.FloatField()
     price = models.PositiveBigIntegerField()
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='items', null=True)
 
