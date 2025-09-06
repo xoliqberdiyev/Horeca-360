@@ -64,13 +64,6 @@ class OrderCreateSerializer(serializers.Serializer):
                     chat_id=item.get('product').tg_id,
                     product_name=item.get('product').name,
                     quantity=item.get('quantity'),
-                    price=item.get('price'),
-                    payment_type=validated_data.get('payment_type'),
-                    delivery_type=validated_data.get('delivery_type'),
-                    contact_number=validated_data.get('contact_number'),
-                    address=validated_data.get('address'),
-                    comment=validated_data.get('comment'),
-                    name=validated_data.get('name')
                 )
 
             OrderItem.objects.bulk_create(items)
