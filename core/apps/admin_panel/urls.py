@@ -58,6 +58,7 @@ urlpatterns = [
     path('order/', include(
         [
             path('list/', order_views.OrderListApiView.as_view()),
+            path('<uuid:id>/delete/', order_views.OrderDeleteApiView.as_view()),
         ]
     )),
     path('dashboard/', include(

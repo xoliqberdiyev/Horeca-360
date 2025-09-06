@@ -1,3 +1,5 @@
+from django.shortcuts import get_object_or_404
+
 from rest_framework import generics, views, status
 from rest_framework.permissions import IsAdminUser
 
@@ -16,3 +18,12 @@ class OrderListApiView(generics.GenericAPIView):
         if page is not None:
             serializer = self.serializer_class(page, many=True)
             return self.get_paginated_response(serializer.data)
+
+
+class OrderDeleteApiView(views.APIView, ResponseMixin):
+    permission_classes = [IsAdminUser]
+
+    def delete(self, request, id):
+        order = get_object_or_404(Order, id=id)
+        order.delete()
+        return self.success_response(status_code=status.HTTP_204_NO_CONTENT)
