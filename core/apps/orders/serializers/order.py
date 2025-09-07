@@ -28,7 +28,6 @@ class OrderCreateSerializer(serializers.Serializer):
     payment_type = serializers.ChoiceField(choices=Order.PAYMENT_TYPE)
     delivery_type = serializers.ChoiceField(choices=Order.DELIVERY_TYPE)
     contact_number = serializers.CharField()
-    address = serializers.CharField()
     comment = serializers.CharField(required=False)
     name = serializers.CharField(required=False)
     
@@ -56,13 +55,14 @@ class OrderCreateSerializer(serializers.Serializer):
                 ))
                 if product.quantity_left > 0:
                     product.quantity_left -= item.get('quantity')
-                    product.save()
-                
-                total_price += item.get('price')
+                    product.save()                
+                total_price += item['price']
                 send_orders_to_tg_bot.delay(
                     chat_id=item.get('product').tg_id,
                     product_name=item.get('product').name,
                     quantity=item.get('quantity'),
+                    first_name=order.user.first_name,
+                    last_name=order.user.last_name,
                 )
 
             OrderItem.objects.bulk_create(items)

@@ -23,7 +23,6 @@ class Order(BaseModel):
     delivery_type = models.CharField(max_length=200, choices=DELIVERY_TYPE, null=True)
     delivery_price = models.PositiveBigIntegerField(default=0)
     contact_number = models.CharField(max_length=15, null=True, blank=True)
-    address = models.TextField(null=True, blank=True)
     comment = models.CharField(max_length=500, null=True, blank=True)
     name = models.CharField(max_length=200, null=True, blank=True)
 
