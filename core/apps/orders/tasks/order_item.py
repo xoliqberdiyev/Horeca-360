@@ -10,8 +10,8 @@ token = env.str("BOT_TOKEN")
 def send_orders_to_tg_bot(chat_id, product_name, quantity):
     url = f"https://api.telegram.org/bot{token}/sendMessage"
     message = (
-        f"📦 Mahsulot nomi: {product_name}\n"
-        f"🔢 Mahsulot soni: {quantity}\n"
+        f"✅ Товар: {product_name}\n"
+        f"🔢 Кол-во: {quantity}\n"
     )
     payload = {
         "chat_id": chat_id,
