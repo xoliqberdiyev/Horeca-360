@@ -88,5 +88,5 @@ class OrderListSerializer(serializers.ModelSerializer):
         model = Order
         fields = [
             'id', 'order_number', 'total_price', 'payment_type', 'delivery_type', 'delivery_price',
-            'contact_number', 'address', 'comment', 'name', 'items', 'created_at'
+            'contact_number', 'comment', 'name', 'items', 'created_at'
         ]
