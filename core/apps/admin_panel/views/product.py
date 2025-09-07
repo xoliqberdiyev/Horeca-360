@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404 
 
-from rest_framework import generics, views, status, parsers
+from rest_framework import generics, views, status, parsers, filters
 from rest_framework.permissions import IsAdminUser
 
 from core.apps.admin_panel.serializers import product as serializers
@@ -12,9 +12,11 @@ class ProductListApiView(generics.GenericAPIView):
     serializer_class = serializers.AdminProductListSerializer
     queryset = Product.objects.select_related('category', 'unity').order_by('name')
     permission_classes = [IsAdminUser]
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['name']
 
     def get(self, request):
-        page = self.paginate_queryset(self.queryset)
+        page = self.paginate_queryset(self.filter_queryset(self.queryset))
         if page is not None:
             serializer = self.serializer_class(page, many=True)
             return self.get_paginated_response(serializer.data)

@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404
 
-from rest_framework import generics, views
+from rest_framework import generics, views, filters
 from rest_framework.response import Response
 
 from core.apps.products.models import Product, Category
@@ -11,11 +11,13 @@ class ProductListApiView(generics.GenericAPIView):
     serializer_class = serializers.ProductListSerializer
     queryset = Product.objects.select_related('unity')
     permission_classes = []
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['name']
 
     def get(self, request, category_id):
         category = get_object_or_404(Category, id=category_id)
         products = Product.objects.filter(category=category).select_related('unity')
-        page = self.paginate_queryset(products)
+        page = self.paginate_queryset(self.filter_queryset(products))
         if page is not None:
             serializer = self.serializer_class(page, many=True, context={'user': request.user})
             return self.get_paginated_response(serializer.data)
