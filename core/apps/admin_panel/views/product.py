@@ -10,7 +10,7 @@ from core.apps.products.models import Product
 
 class ProductListApiView(generics.GenericAPIView):
     serializer_class = serializers.AdminProductListSerializer
-    queryset = Product.objects.select_related('category', 'unity')
+    queryset = Product.objects.select_related('category', 'unity').order_by('name')
     permission_classes = [IsAdminUser]
 
     def get(self, request):
