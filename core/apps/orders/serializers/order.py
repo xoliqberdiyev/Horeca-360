@@ -52,9 +52,6 @@ class OrderCreateSerializer(serializers.Serializer):
                     quantity=item.get('quantity'),
                     order=order,
                 ))
-                if product.quantity_left > 0:
-                    product.quantity_left -= item.get('quantity')
-                    product.save()                
                 total_price += item['price']
                 send_orders_to_tg_bot.delay(
                     chat_id=item.get('product').tg_id,
