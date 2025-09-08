@@ -17,6 +17,7 @@ class OrderItemSerializer(serializers.ModelSerializer):
             'id': obj.product.id,
             'name_uz': obj.product.name_uz,
             'name_ru': obj.product.name_ru,
+            'price': obj.product.price
         }
 
 
