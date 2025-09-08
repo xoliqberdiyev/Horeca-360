@@ -10,7 +10,7 @@ class SearchApiView(views.APIView):
     permission_classes = []
 
     def get(self, request):
-        search = request.query_param.get('search')
+        search = request.query_params.get('search')
         if search is None:
             return Response({"success": False, "message": 'search is required'}, status=400)
         products = Product.objects.filter(name__istartswith=search)
