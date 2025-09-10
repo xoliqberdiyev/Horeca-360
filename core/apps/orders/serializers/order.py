@@ -7,7 +7,7 @@ from rest_framework import serializers
 from core.apps.orders.models import Order, OrderItem
 from core.apps.products.models import Product
 from core.apps.products.serializers.product import ProductListSerializer
-from core.apps.orders.tasks.order_item import send_orders_to_tg_bot
+from core.apps.orders.tasks.order_item import send_orders_to_tg_bot, send_message_order_user
 
 
 class OrderItemCreateSerializer(serializers.Serializer):
@@ -58,6 +58,10 @@ class OrderCreateSerializer(serializers.Serializer):
                     product_name=item.get('product').name,
                     quantity=item.get('quantity'),
                     username=order.user.username,
+                )
+                send_message_order_user.delay(
+                    chat_id=order.user.tg_id,
+                    order_id=order.id,
                 )
 
             OrderItem.objects.bulk_create(items)
