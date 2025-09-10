@@ -57,8 +57,7 @@ class OrderCreateSerializer(serializers.Serializer):
                     chat_id=item.get('product').tg_id,
                     product_name=item.get('product').name,
                     quantity=item.get('quantity'),
-                    first_name=order.user.first_name,
-                    last_name=order.user.last_name,
+                    username=order.user.username,
                 )
 
             OrderItem.objects.bulk_create(items)
