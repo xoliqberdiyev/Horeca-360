@@ -16,7 +16,7 @@ class ProductListApiView(generics.GenericAPIView):
 
     def get(self, request, category_id):
         category = get_object_or_404(Category, id=category_id)
-        products = Product.objects.filter(category=category).select_related('unity')
+        products = Product.objects.filter(category=category).select_related('unity').distinct()
         page = self.paginate_queryset(self.filter_queryset(products))
         if page is not None:
             serializer = self.serializer_class(page, many=True, context={'user': request.user})
