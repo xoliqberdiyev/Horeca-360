@@ -25,7 +25,7 @@ def send_orders_to_tg_bot(chat_id, product_name, quantity, username):
 
 @shared_task
 def send_message_order_user(chat_id, order_id):
-    url = f"https://api.telegram.org/bot{token}/sendMessage"
+    url = f"https://api.telegram.org/bot7003564044:AAE4R5Nk-E74hOno932iJINNPW3YRjjH8Mo/sendMessage"
     order = Order.objects.get(id=order_id)
     result = []
     for order_item in order.items.all():
