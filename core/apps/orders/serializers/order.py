@@ -59,14 +59,14 @@ class OrderCreateSerializer(serializers.Serializer):
                     quantity=item.get('quantity'),
                     username=order.user.username,
                 )
-                send_message_order_user.delay(
-                    chat_id=order.user.tg_id,
-                    order_id=order.id,
-                )
 
             OrderItem.objects.bulk_create(items)
             order.total_price = total_price
             order.save()
+            send_message_order_user.delay(
+                chat_id=order.user.tg_id,
+                order_id=order.id,
+            )
             return order
         
 

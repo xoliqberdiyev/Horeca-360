@@ -35,13 +35,13 @@ def send_message_order_user(chat_id, order_id):
         price = order_item.price
 
         result.append(f"🔹 {product_name} {unit} ({quantity} x {price:.2f})")
-
+    items_text = "\n".join(result)  
     message = (
         f'⚡️ Оформлен новый заказ\n\n'
 
         f"Сумма заказа №{order.order_number}: {order.total_price}\n\n"
         
-        f"{result}"
+        f"{items_text}"
     )
 
     payload = {
