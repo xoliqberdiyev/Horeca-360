@@ -14,6 +14,12 @@ class OrderListApiView(generics.GenericAPIView):
     permission_classes = [IsAdminUser]
 
     def get(self, request):
+        date = request.query_params.get('date')
+        name = request.query_params.get('name')
+        if date:
+            self.queryset = self.queryset.filter(date=date)
+        if name:
+            self.queryset = self.queryset.filter(name=name)
         page = self.paginate_queryset(self.queryset)
         if page is not None:
             serializer = self.serializer_class(page, many=True)
