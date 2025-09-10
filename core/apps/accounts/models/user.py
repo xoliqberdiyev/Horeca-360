@@ -5,6 +5,6 @@ from core.apps.shared.models.base import BaseModel
 
 
 class User(AbstractUser, BaseModel):
-    pass 
+    tg_id = models.CharField(max_length=20, null=True, blank=True) 
 
 

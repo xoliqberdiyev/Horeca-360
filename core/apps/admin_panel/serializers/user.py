@@ -44,10 +44,13 @@ class UserSerializer(serializers.ModelSerializer):
 class UserLoginSerializer(serializers.Serializer):
     username = serializers.CharField()
     password = serializers.CharField()
+    tg_id = serializers.CharField()
 
     def validate(self, data):
         user = User.objects.filter(username=data['username'], is_superuser=True).first()
         if not user:
             raise serializers.ValidationError("User not found")
+        user.tg_id = data['tg_id']
+        user.save()
         data['user'] = user
         return data
