@@ -13,9 +13,12 @@ class ProductListApiView(generics.GenericAPIView):
     queryset = Product.objects.select_related('category', 'unity').order_by('name')
     permission_classes = [IsAdminUser]
     filter_backends = [filters.SearchFilter]
-    search_fields = ['name']
+    search_fields = ['name',]
 
     def get(self, request):
+        category_id = request.query_params.get('category')
+        if category_id:
+            self.queryset = self.queryset.filter(category__id=category_id)
         page = self.paginate_queryset(self.filter_queryset(self.queryset))
         if page is not None:
             serializer = self.serializer_class(page, many=True)
