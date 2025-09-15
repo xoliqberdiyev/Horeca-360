@@ -19,6 +19,7 @@ class OrderItemCreateSerializer(serializers.Serializer):
         if not product:
             raise serializers.ValidationError("Product not found")
         data['product'] = product
+        product.quantity_left -= round(data['quantity'] / product.min_quantity)
         data['price'] = round((data['quantity'] / product.min_quantity) * product.price)
         return data
     
