@@ -17,3 +17,11 @@ class CustomUserLoginSerializer(serializers.Serializer):
             user.save()
         data['user'] = user
         return data
+    
+
+class UserListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = [
+            'id', 'tg_id'
+        ]

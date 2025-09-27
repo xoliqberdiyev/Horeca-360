@@ -9,4 +9,5 @@ urlpatterns = [
     path('login/', user.UserLoginApiView.as_view()),    
     path('<uuid:product_id>/like/', like_views.LikeApiView.as_view()),
     path('liked_products/', like_views.LikeProductListApiView.as_view()),
+    path('user/list/', user.UserListApiView.as_view()),
 ]
