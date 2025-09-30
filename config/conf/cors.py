@@ -3,7 +3,9 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:5173",
     'https://agro365.vercel.app',
+    'https://agro365.felixits.uz',
     'https://agro365-admin.vercel.app',
+    'https://agro365-admin.felixits.uz',
 ]
 
 CSRF_TRUSTED_ORIGINS = [
