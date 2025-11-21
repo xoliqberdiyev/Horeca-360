@@ -13,7 +13,7 @@ class ProductListApiView(generics.GenericAPIView):
     queryset = Product.objects.select_related('category', 'unity').order_by('name')
     permission_classes = [IsAdminUser]
     filter_backends = [filters.SearchFilter]
-    search_fields = ['name',]
+    search_fields = ['name', 'tg_id']
 
     def get(self, request):
         category_id = request.query_params.get('category')
