@@ -7,7 +7,7 @@ from core.apps.orders.serializers import order as serializers
 
 class OrderCreateApiView(generics.GenericAPIView):
     serializer_class = serializers.OrderCreateSerializer
-    queryset = Order.objects.all()
+    queryset = Order.objects.order_by('status')
     permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request):

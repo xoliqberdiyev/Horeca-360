@@ -10,7 +10,7 @@ from core.apps.orders.models import Order
 
 class OrderListApiView(generics.GenericAPIView):
     serializer_class = OrderSerializer
-    queryset = Order.objects.select_related('user').prefetch_related('items', 'items__product').order_by('order_number')
+    queryset = Order.objects.select_related('user').prefetch_related('items', 'items__product').order_by('status', 'order_number')
     permission_classes = [IsAdminUser]
 
     def get(self, request):

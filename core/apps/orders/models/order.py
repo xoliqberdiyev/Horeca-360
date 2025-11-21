@@ -15,6 +15,10 @@ class Order(BaseModel):
         ('DELIVERY_COURIES', 'kuryer orqali yetkazib berish'),
         ('PICKUP', 'olib ketish'),
     )
+    STATUS = (
+        ('NEW', 'yangi'),
+        ('DONE', 'tayyor'),
+    )
 
     total_price = models.PositiveBigIntegerField(default=0)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='orders') 
@@ -25,6 +29,7 @@ class Order(BaseModel):
     contact_number = models.CharField(max_length=15, null=True, blank=True)
     comment = models.CharField(max_length=500, null=True, blank=True)
     name = models.CharField(max_length=200, null=True, blank=True)
+    status = models.CharField(max_length=20, choices=STATUS, default='NEW')
 
     def __str__(self):
         return f'{self.user} order'
