@@ -38,7 +38,7 @@ class OrderDeleteApiView(views.APIView, ResponseMixin):
 class OrderStatusUpdateApiView(views.APIView, ResponseMixin):
     permission_classes = [IsAdminUser]
 
-    def delete(self, request, id):
+    def post(self, request, id):
         status = request.data.get('status')
         if not status:
             return self.failure_response(message='status is required, please send NEW or DONE as a statuc')
