@@ -59,6 +59,7 @@ urlpatterns = [
         [
             path('list/', order_views.OrderListApiView.as_view()),
             path('<uuid:id>/delete/', order_views.OrderDeleteApiView.as_view()),
+            path('<uuid:id>/status_update/', order_views.OrderStatusUpdateApiView.as_view()),
         ]
     )),
     path('dashboard/', include(

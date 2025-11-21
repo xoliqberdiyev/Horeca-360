@@ -33,3 +33,16 @@ class OrderDeleteApiView(views.APIView, ResponseMixin):
         order = get_object_or_404(Order, id=id)
         order.delete()
         return self.success_response(status_code=status.HTTP_204_NO_CONTENT)
+    
+
+class OrderStatusUpdateApiView(views.APIView, ResponseMixin):
+    permission_classes = [IsAdminUser]
+
+    def delete(self, request, id):
+        status = request.data.get('status')
+        if not status:
+            return self.failure_response(message='status is required, please send NEW or DONE as a statuc')
+        order = get_object_or_404(Order, id=id)
+        order.status = status
+        order.save()
+        return self.success_response(message='Saqlandi')
