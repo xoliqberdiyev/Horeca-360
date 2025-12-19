@@ -12,6 +12,8 @@ class CustomUserLoginSerializer(serializers.Serializer):
         user = User.objects.filter(username=data['username']).first()
         if not user:
             raise serializers.ValidationError("User not found")
+        if not user.check_password(data['password']):
+            raise serializers.ValidationError("User not found")
         if data.get('tg_id'):
             user.tg_id = data.get('tg_id')
             user.save()
